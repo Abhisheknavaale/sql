@@ -1,0 +1,351 @@
+# 14. Factorial of a number
+
+def factorial(n):
+    fact = 1
+    if n<0:
+        return 0
+    elif n == 0 or n ==1:
+        return 1
+    else:
+        for i in range(1, n+1):
+            fact = fact * i
+        return fact
+    
+    
+factorial(4)
+24
+def factorial(n):
+    return 1 if (n==0 or n==1) else n *factorial(n-1)
+factorial(4)
+24
+# 15. area of circle
+
+def circle_area(r):
+    return 3.14 * (r**2)
+    
+circle_area(5)
+78.5
+# 16. Convert string to uppercase without using string methods
+
+def upper(s):
+    upper_str = ''
+    for i in s:
+        upper_str = upper_str + chr(ord(i) - 32)
+    print(upper_str)
+
+upper('sfcg')
+SFCG
+print(ord('A'))
+print(ord('a'))
+print(ord('Z'))
+print(ord('z'))
+65
+97
+90
+122
+97-65
+32
+# 17. given a point check if it lies inside circle
+from math import sqrt
+
+def inside_circle(a, r, b):
+    dist = sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
+    print(dist)
+    if dist < r:
+        print("inside")
+    else:
+        print('outside')
+    
+inside_circle([0,0],5,[3,3])
+4.242640687119285
+inside
+# 18. given a point check if it lies inside rectange
+
+def inside_rectangle(ulx, uly, lrx, lry, myx, myy):
+    if myx > ulx and myx < lrx and myy < uly and myy >lry:
+        print('inside')
+    else:
+        print('outside')
+    
+
+inside_rectangle(1,4,3,2,2,3)
+inside
+# 17. pythagorean triples
+# https://www.geeksforgeeks.org/find-pythagorean-triplet-in-an-unsorted-array/
+
+def pythagorean_triples(lst):
+    for i in range(len(lst)):
+        for j in range(len(lst)):
+            for k in range(len(lst)):
+                x = lst[i] * lst[i]
+                print("x is ", x)
+                y = lst[j] * lst[j]
+                print("y is", y)
+                z = lst[k] * lst[k]
+                print("z is ", z)
+                if x == y+z or y == x+z or z==x+y:
+                    return lst[i], lst[j], lst[k]
+    return 0
+    
+    
+a = pythagorean_triples([3, 1, 4, 6, 5])
+print(a)
+ar1 = [3, 1, 4, 6, 5]
+ar2 = [8, 6, 10]
+ar3 = [5, 12, 13]
+ar4 = [15, 8, 17]
+ar5 = [12, 16, 20]
+x is  9
+y is 9
+z is  9
+x is  9
+y is 9
+z is  1
+x is  9
+y is 9
+z is  16
+x is  9
+y is 9
+z is  36
+x is  9
+y is 9
+z is  25
+x is  9
+y is 1
+z is  9
+x is  9
+y is 1
+z is  1
+x is  9
+y is 1
+z is  16
+x is  9
+y is 1
+z is  36
+x is  9
+y is 1
+z is  25
+x is  9
+y is 16
+z is  9
+x is  9
+y is 16
+z is  1
+x is  9
+y is 16
+z is  16
+x is  9
+y is 16
+z is  36
+x is  9
+y is 16
+z is  25
+(3, 4, 5)
+18. infix to postfix
+Examples taken from http://www.cs.kent.edu/~nmadi/CS23001/fix-Quiz.pdf rules taken from https://www.youtube.com/watch?v=8QxlrRws9OI&t=227s
+
+Print operands as they arrive
+if incoming symbol is ( push it to stack
+if incoming symbol is ) pop the stack and print operators till ( encounters
+if incoming symbol has higher precedence than the top of the stack, push to stack
+if incoming symbol has lower precedence than the top of the stack, pop and print the stack. Then test the incoming operator against the new top of the stack
+if incoming symbol has equal precedence with the top of the stack, use associavity rule
+at the end of the expression pop and print all operators of stack
+associavity
+if associavity is left to right then pop and print, push into stack the incoming operator
+if associavity is right to left push into stack the incoming operator
+s = "hello world"
+for i in s:
+    print(i)
+h
+e
+l
+l
+o
+ 
+w
+o
+r
+l
+d
+def notgreater(stack, i):
+    precedence = {'+': 1, '-': 1, '%':2, '/':2, '*':2, '^':3}
+    if stack[-1] == '(':
+        return False
+    if precedence[i] <= precedence[stack[-1]]:
+        return True
+    else:
+        return False
+
+def infixToPostfix(exp):
+    
+    stack = []
+    output = ""
+    exp = exp.replace(' ', '')
+    print("exp is ", exp)
+    for i in exp:
+        if i.isalnum() == True:
+            output = output+i
+        elif i == '(':
+            stack.append(i)
+        elif i == ')':
+            while(len(stack) !=0 and stack[-1] != '('):
+                n = stack.pop()
+                output = output + n
+            else:
+                m=stack.pop()
+        else:
+            while(len(stack)!=0 and notgreater(stack, i)):
+                o = stack.pop()
+                output = output + o
+            stack.append(i)
+    while(len(stack)!=0):
+        g = stack.pop()
+        output = output + g
+    return output
+
+    
+infixToPostfix('( A + ( B * C ) )')
+exp is  (A+(B*C))
+'ABC*+'
+assert infixToPostfix('x^y/(5*z)+2') == 'xy^5z*/2+', "case1 failed"
+
+assert infixToPostfix('a+b*(c^d-e)^(f+g*h)-i') == 'abcd^e-fgh*+^*+i-', "case2 failed"
+
+assert infixToPostfix('( A + ( B * C ) )') == 'ABC*+', "case3 failed"
+
+assert infixToPostfix('( ( A + ( B * C ) ) / ( D E ) ) ') == 'ABC*+DE/', "case4 failed"
+
+assert infixToPostfix('( ( A + B ) * ( C + E ) )') == 'AB+CE+*', "case5 failed"
+
+assert infixToPostfix('( A * ( B * ( ( ( C + A ) + B ) * C ) ) )') == 'ABCA+B+C***', "case6 failed"
+exp is  x^y/(5*z)+2
+exp is  a+b*(c^d-e)^(f+g*h)-i
+exp is  (A+(B*C))
+exp is  ((A+(B*C))/(DE))
+exp is  ((A+B)*(C+E))
+exp is  (A*(B*(((C+A)+B)*C)))
+ 
+ 
+19. infix to prefix
+reverse the given string
+Print operands as they arrive
+if incoming symbol is ) push it to stack
+if incoming symbol is ( pop the stack and print operators till ) encounters
+if incoming symbol has higher precedence than the top of the stack, push to stack
+if incoming symbol has lower precedence than the top of the stack, pop and print the stack. Then test the incoming operator against the new top of the stack
+if incoming symbol has equal precedence with the top of the stack, use associavity rule
+at the end of the expression pop and print all operators of stack
+associavity
+if associavity is left to right then push into stack the incoming operator
+if associavity is right to left then pop and print, push into stack the incoming operator
+def notGreater(stack, i):
+    precedence = {'+':1, '-':1, '*':2, '/':2, '%':2, '^':3}
+    if stack[-1] == ')':
+        return False
+    a = precedence[i]
+    b = precedence[stack[-1]] 
+    if a  <= b:
+        return True
+    else:
+        return False
+
+
+def infixToprefix(exp):
+    stack = []
+    exp = exp[::-1]
+    output = ""
+    exp = exp.replace(' ', '')
+    for i in exp:
+
+        if i.isalnum() == True: # check if operand add to output
+            print(i,"~ Operand push to stack")
+            output = output + i
+
+        # If the character is an '(', push it to stack 
+        elif i  == ')':
+            stack.append(i)
+
+        elif i == '(':  # if ')' pop till '('
+            while(len(stack) != 0 and stack[-1] != ')'):
+                n = stack.pop() 
+                output = output + n
+                print(n, "~ Operator popped from stack")
+            else:
+                x = stack.pop()
+                print(x, "Popping and deleting (")
+        else: 
+            while(len(stack) != 0 and notGreater(stack, i)):
+                c = stack.pop()
+                output = output + c
+                print(c,"Operator popped after checking precedence from stack")
+            stack.append(i)
+            print(i,"Operator pushed to stack")
+
+    # pop all the operator from the stack 
+    while len(stack) != 0:
+        xx = stack.pop()
+        output = output + xx
+        print(xx,"~ pop at last")
+    return output[::-1]
+The code is correct but did not work in video because the below test cases were wrong
+assert infixToprefix(' AX + ( B * C )') == '+AX*BC', "case1 failed"
+print('case1 passed')
+
+assert infixToprefix(' ( AX + ( B * C ) ) / ( D E )') == '/+AX*BCDE', "case2 failed"
+print('case2 passed')
+
+assert infixToprefix(' ( A + B ) * ( C + E ) ') == '*+AB+CE', "case3 failed"
+print('case3 passed')
+
+assert infixToprefix(' A + ( B * C )') == '+A*BC', "case4 failed"
+print('case4 passed')
+C ~ Operand push to stack
+* Operator pushed to stack
+B ~ Operand push to stack
+* ~ Operator popped from stack
+) Popping and deleting (
++ Operator pushed to stack
+X ~ Operand push to stack
+A ~ Operand push to stack
++ ~ pop at last
+case1 passed
+E ~ Operand push to stack
+D ~ Operand push to stack
+) Popping and deleting (
+/ Operator pushed to stack
+C ~ Operand push to stack
+* Operator pushed to stack
+B ~ Operand push to stack
+* ~ Operator popped from stack
+) Popping and deleting (
++ Operator pushed to stack
+X ~ Operand push to stack
+A ~ Operand push to stack
++ ~ Operator popped from stack
+) Popping and deleting (
+/ ~ pop at last
+case2 passed
+E ~ Operand push to stack
++ Operator pushed to stack
+C ~ Operand push to stack
++ ~ Operator popped from stack
+) Popping and deleting (
+* Operator pushed to stack
+B ~ Operand push to stack
++ Operator pushed to stack
+A ~ Operand push to stack
++ ~ Operator popped from stack
+) Popping and deleting (
+* ~ pop at last
+case3 passed
+C ~ Operand push to stack
+* Operator pushed to stack
+B ~ Operand push to stack
+* ~ Operator popped from stack
+) Popping and deleting (
++ Operator pushed to stack
+A ~ Operand push to stack
++ ~ pop at last
+case4 passed
+ 
