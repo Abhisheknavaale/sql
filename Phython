@@ -1,0 +1,228 @@
+Agenda
+Approach to solve problems
+Computational thinking
+logic building
+Approach to solve any problem
+Repeat the question, ask to interviewer to repeat
+Write out examples
+Describe your code, think out load.
+Write your code
+Atlast optimize
+# 1. given a number check if its even or odd
+
+def check_even_odd(n):
+    """
+    program to check if a number is even odd
+    """
+    if n%2 ==0:
+        print('even')
+    else:
+        print('odd')
+
+check_even_odd(3)
+odd
+# 2. print even number upto n
+
+def print_n_even(n):
+    for i in range(0,n+1):
+        if i%2 ==0:
+            print(i, end=' ')
+
+# print_n_even(50)
+
+
+def print_n_even_better(n):
+    for i in range(0, n+1, 2):
+        print(i, end=' ')
+
+print_n_even_better(50)
+0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 
+# 3. Count the number of capital letters in a file
+
+filename = "/home/sage08ai/Desktop/1.txt"
+
+def count_capital_letters(filename):
+    with open(filename, 'r') as file:
+        count = 0
+        text = file.read()
+        for letter in text:
+            if letter.isupper():
+                count = count + 1
+    print(count)
+count_capital_letters(filename)
+24
+# 4. Count the number of all letters in a file
+
+filename = "/home/sage08ai/Desktop/1.txt"
+
+def count_capital_letters(filename):
+    with open(filename, 'r') as file:
+        dct = {}
+        text = file.read()
+        for letter in text:
+            if letter in dct:
+                dct[letter] += 1
+            else:
+                dct[letter] = 1
+    print(dct)
+            
+count_capital_letters(filename)
+{'H': 2, 'e': 2, 'l': 3, 'o': 2, '!': 1, '\n': 4, 'A': 1, 'B': 1, 'C': 1, 'D': 1, 'E': 1, 'F': 1, 'G': 1, 'I': 1, 'J': 1, 'K': 1, 'L': 1, 'M': 1, 'N': 1, 'O': 1, 'P': 1, 'Q': 1, 'R': 1, 'S': 1, 'T': 1, 'a': 1, 'b': 1, 'c': 1, 'd': 1, 'f': 1, 'g': 1, 'h': 1, 'i': 1, 'j': 1, 'k': 1, 'm': 1, 'n': 1, 'p': 1, 'q': 1, 'r': 1, 's': 1, 't': 1}
+s = " "
+s*10
+'          '
+# 5. print star triangle format
+def star_traingle(n):
+    for i in range(n):
+        #print((n-i-1), (2*i+1))
+        print(" "*(n-i-1) + '*'*(2*i + 1))
+
+star_traingle(4)
+   *
+  ***
+ *****
+*******
+# 6. Check if 2 numbers are anagrams 
+# example1 salesman nameless
+# example2 danger garden
+# anagrams means 2 strings made of same characters with same frequecies
+
+def anagrams(str1, str2):
+    if len(str1) != len(str2):
+        return False
+    str1_count = {}
+    str2_count = {}
+    for char in str1:
+        if char in str1_count:
+            str1_count[char] += 1
+        else:
+            str1_count[char] = 1
+    for char in str2:
+        if char in str2_count:
+            str2_count[char] += 1
+        else:
+            str2_count[char] = 1
+    for key in str1_count:
+        if key not in str2_count or str1_count[key] != str2_count[key]:
+            return False
+    return True
+            
+anagrams('ganden', 'danger')
+False
+from collections import Counter
+
+def anagrams(str1, str2):
+    if len(str1) != len(str2):
+        return False
+    return Counter(str1) == Counter(str2)
+
+anagrams('garden', 'danger')
+True
+Counter('garden')
+Counter({'g': 1, 'a': 1, 'r': 1, 'd': 1, 'e': 1, 'n': 1})
+def anagrams(a,b):
+    if len(a) == len(b):
+        for i in a:
+            for j in b:
+                if i == j:
+                    return True
+    #print("yes")
+    else:
+        return False
+
+anagrams("salesman","nameless")
+True
+def anagrams(str1, str2):
+    if sorted(str1) == sorted(str2):
+        return True
+    else:
+        return False
+
+anagrams('garden', 'danger')
+True
+# 7. Count no. of digits in a number
+
+def count_digits(n):
+    count = 0
+    while n > 0:
+        n = n // 10
+        count = count+1
+    print(count)
+
+count_digits(189)
+3
+# 8. Given a number and a digit, check if digit accours in number
+
+def check_digit_in_number(n, digit):
+    while n != 0:
+        rem = n % 10
+        if rem == digit:
+            return True
+        n = n // 10
+    else:
+        return False
+
+check_digit_in_number(1895, 5)
+True
+# 9. Given a number and a digit, count occurances of digit in number
+
+def count_digit_in_number(n, digit):
+    count = 0
+    while n != 0:
+        rem = n % 10
+        if rem == digit:
+            count = count + 1
+        n = n // 10
+    return count
+
+count_digit_in_number(18955, 5)
+2
+# 10. Return first digit of number
+
+def func(n):
+    while n >= 10:
+        n = n//10
+    return int(n)
+
+func(9018)
+9
+# 11. Product of digits of number
+
+def func(n):
+    prod = 1
+    while n !=0:
+        prod = prod * (n%10)
+        n = n // 10
+    return prod
+    
+func(9118)
+72
+# 12. Reverse of a number
+def func(n):
+    rev = 0
+    while n !=0:
+        rem = n%10
+        rev = rev*10 +rem
+        print(rev)
+        n = n//10
+    return rev
+
+func(9118)
+8
+81
+811
+8119
+8119
+# 13. All factors of a number
+#factors of 8 are 1248
+
+def factors(n):
+    l=[]
+    for i in range(1,(n//2)+1):
+        if n%i==0:
+            l.append(i)
+    l.append(n)
+    print(l)
+
+factors(10)
+[1, 2, 5, 10]
